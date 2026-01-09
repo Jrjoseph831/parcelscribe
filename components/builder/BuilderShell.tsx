@@ -51,7 +51,7 @@ export function BuilderShell({
               ) : (
                 <span>Signed in</span>
               )}
-              <Button size="sm" variant="secondary" onClick={handleSignOut}>
+              <Button variant="secondary" onClick={handleSignOut}>
                 Sign out
               </Button>
             </div>

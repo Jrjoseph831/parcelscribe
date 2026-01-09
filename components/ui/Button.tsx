@@ -2,10 +2,21 @@ import type { AnchorHTMLAttributes, ButtonHTMLAttributes } from "react";
 
 type ButtonVariant = "primary" | "secondary";
 
-type ButtonProps = (
-  | ({ href?: undefined } & ButtonHTMLAttributes<HTMLButtonElement>)
-  | ({ href: string } & AnchorHTMLAttributes<HTMLAnchorElement>)
-) & { variant?: ButtonVariant } & { className?: string };
+type ButtonOnlyProps = ({ href?: undefined } & ButtonHTMLAttributes<HTMLButtonElement>) & {
+  variant?: ButtonVariant;
+  className?: string;
+};
+
+type AnchorButtonProps = ({ href: string } & AnchorHTMLAttributes<HTMLAnchorElement>) & {
+  variant?: ButtonVariant;
+  className?: string;
+};
+
+type ButtonProps = ButtonOnlyProps | AnchorButtonProps;
+
+function isAnchorButton(props: ButtonProps): props is AnchorButtonProps {
+  return typeof props.href === "string";
+}
 
 const baseClasses =
   "inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2";
@@ -20,12 +31,15 @@ export function buttonClasses(variant: ButtonVariant = "primary", extra = "") {
   return `${baseClasses} ${variantClasses[variant]} ${extra}`.trim();
 }
 
-export function Button({ variant = "primary", className = "", href, ...props }: ButtonProps) {
+export function Button(props: ButtonProps) {
+  const { variant = "primary", className = "" } = props;
   const classes = buttonClasses(variant, className);
 
-  if (href) {
-    return <a href={href} className={classes} {...props} />;
+  if (isAnchorButton(props)) {
+    const { href, variant: _variant, className: _className, ...anchorProps } = props;
+    return <a href={href} className={classes} {...anchorProps} />;
   }
 
-  return <button className={classes} {...props} />;
+  const { variant: _variant, className: _className, ...buttonProps } = props;
+  return <button className={classes} {...buttonProps} />;
 }

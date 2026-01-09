@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import type { PacketDraft, PacketSummary } from "@/lib/packets/types";
 import { validateStep } from "@/lib/packets/validation";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState, type ReactElement } from "react";
 import Link from "next/link";
 
 type StepComponentProps = {
@@ -21,7 +21,7 @@ type StepComponentProps = {
   onChange: <K extends keyof PacketDraft>(key: K, value: PacketDraft[K]) => void;
 };
 
-const steps: { title: string; component: (props: StepComponentProps) => JSX.Element }[] = [
+const steps: { title: string; component: (props: StepComponentProps) => ReactElement }[] = [
   { title: "Carrier & issue", component: StepCarrierIssue },
   { title: "Shipment details", component: StepShipmentDetails },
   { title: "Contents & value", component: StepContentsValue },

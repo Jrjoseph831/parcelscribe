@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createServerClient } from "@supabase/ssr";
+import type { ResponseCookie } from "next/dist/compiled/@edge-runtime/cookies";
+
+type CookieToSet = { name: string; value: string; options?: Partial<ResponseCookie> };
 
 export async function GET(request: NextRequest) {
   const url = new URL(request.url);
@@ -25,7 +28,7 @@ export async function GET(request: NextRequest) {
       getAll() {
         return request.cookies.getAll();
       },
-      async setAll(cookiesToSet) {
+      async setAll(cookiesToSet: CookieToSet[]) {
         await Promise.all(
           cookiesToSet.map(({ name, value, options }) => response.cookies.set(name, value, options)),
         );
