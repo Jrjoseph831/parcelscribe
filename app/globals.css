@@ -24,3 +24,17 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+[data-paid="false"] .evidence-image {
+  filter: blur(6px) brightness(0.9);
+  max-height: 80px;
+}
+
+@media print {
+  [data-paid="false"] .preview-watermark {
+    display: flex !important;
+  }
+  [data-paid="false"] .evidence-image {
+    filter: blur(12px) !important;
+  }
+}
