@@ -7,7 +7,6 @@ import { buttonClasses } from "@/components/ui/Button";
 export const metadata: Metadata = {
   title: "UPS/FedEx Claim Guides",
   description: "Guides for UPS and FedEx damage, lost, and missing-contents claims. Step-by-step checklists and templates.",
-  alternates: { canonical: "https://parcelscribe.com/guides" },
 };
 
 export default function GuidesIndexPage() {

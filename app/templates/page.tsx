@@ -7,7 +7,6 @@ import { buttonClasses } from "@/components/ui/Button";
 export const metadata: Metadata = {
   title: "Claim Letter Templates",
   description: "UPS/FedEx claim letter templates and evidence checklists for damage or lost packages.",
-  alternates: { canonical: "https://parcelscribe.com/templates" },
 };
 
 export default function TemplatesIndexPage() {

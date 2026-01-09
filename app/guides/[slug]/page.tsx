@@ -28,7 +28,6 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
   return {
     title: guide.metaTitle,
     description: guide.metaDescription,
-    alternates: { canonical: `https://parcelscribe.com/guides/${guide.slug}` },
   };
 }
 
