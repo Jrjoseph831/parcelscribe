@@ -32,7 +32,7 @@ export default function GuidesIndexPage() {
           {guides.map((guide) => (
             <Link
               key={guide.slug}
-              href={`/guides/${guide.slug}`}
+              href={`/guides/${(guide as any).canonicalSlug ?? (guide as any).canonical ?? guide.slug}`}
               className="flex h-full flex-col gap-2 rounded-xl border border-gray-200 bg-white px-4 py-4 shadow-sm hover:border-blue-200"
             >
               <p className="text-sm font-semibold text-gray-900">{guide.title}</p>
@@ -47,7 +47,11 @@ export default function GuidesIndexPage() {
           <p className="mt-2 text-sm text-gray-700">Start from a claim letter template or evidence checklist.</p>
           <div className="mt-4 flex flex-wrap gap-3">
             {templates.map((template) => (
-              <Link key={template.slug} className={buttonClasses("secondary")} href={`/templates/${template.slug}`}>
+              <Link
+                key={template.slug}
+                className={buttonClasses("secondary")}
+                href={`/templates/${(template as any).canonicalSlug ?? (template as any).canonical ?? template.slug}`}
+              >
                 {template.title}
               </Link>
             ))}
