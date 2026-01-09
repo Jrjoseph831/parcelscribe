@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { guides } from "@/content/guides";
-import { templates } from "@/content/templates";
 import { buttonClasses } from "@/components/ui/Button";
+import { listGuides, listTemplates } from "@/lib/content/content";
 
 export const metadata: Metadata = {
   title: "UPS/FedEx Claim Guides",
@@ -10,17 +9,19 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://parcelscribe.com/guides" },
 };
 
-export default function GuidesIndexPage() {
+export default async function GuidesIndexPage() {
+  const [guides, templates] = await Promise.all([listGuides(), listTemplates()]);
+
   return (
     <main className="bg-white px-4 py-12 md:px-10">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-10">
         <header className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <div className="space-y-2">
-            <Link href="/" className="text-xs font-semibold uppercase tracking-wide text-blue-600 underline-offset-2 hover:underline">
+            <Link href="/guides" className="text-xs font-semibold uppercase tracking-wide text-blue-600 underline-offset-2 hover:underline">
               Guides
             </Link>
             <h1 className="text-3xl font-semibold text-gray-900">UPS/FedEx claim guides</h1>
-            <p className="text-lg text-gray-700">Reddit-style answers for damaged, lost, or missing-contents claims.</p>
+            <p className="text-lg text-gray-700">Concise answers for damaged, lost, or missing-contents claims.</p>
           </div>
           <div className="flex flex-wrap gap-3">
             <Link className={buttonClasses("primary")} href="/builder">Start a claim packet</Link>
@@ -32,7 +33,7 @@ export default function GuidesIndexPage() {
           {guides.map((guide) => (
             <Link
               key={guide.slug}
-              href={`/guides/${(guide as any).canonicalSlug ?? (guide as any).canonical ?? guide.slug}`}
+              href={`/guides/${guide.slug}`}
               className="flex h-full flex-col gap-2 rounded-xl border border-gray-200 bg-white px-4 py-4 shadow-sm hover:border-blue-200"
             >
               <p className="text-sm font-semibold text-gray-900">{guide.title}</p>
@@ -50,12 +51,12 @@ export default function GuidesIndexPage() {
               <Link
                 key={template.slug}
                 className={buttonClasses("secondary")}
-                href={`/templates/${(template as any).canonicalSlug ?? (template as any).canonical ?? template.slug}`}
+                href={`/templates/${template.slug}`}
               >
                 {template.title}
               </Link>
             ))}
-            <Link className={buttonClasses("secondary", "border-dashed")} href="/checklist/shipping-damage-evidence-checklist">
+            <Link className={buttonClasses("secondary", "border-dashed")} href="/checklists/shipping-damage-evidence-checklist">
               Evidence checklist
             </Link>
           </div>

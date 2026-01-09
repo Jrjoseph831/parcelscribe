@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { templates } from "@/content/templates";
-import { checklists } from "@/content/checklists";
 import { buttonClasses } from "@/components/ui/Button";
+import { listChecklists, listTemplates } from "@/lib/content/content";
 
 export const metadata: Metadata = {
   title: "Claim Letter Templates",
@@ -10,7 +9,9 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://parcelscribe.com/templates" },
 };
 
-export default function TemplatesIndexPage() {
+export default async function TemplatesIndexPage() {
+  const [templates, checklists] = await Promise.all([listTemplates(), listChecklists()]);
+
   return (
     <main className="bg-white px-4 py-12 md:px-10">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-10">
@@ -44,7 +45,7 @@ export default function TemplatesIndexPage() {
           <h2 className="text-xl font-semibold text-gray-900">Checklists</h2>
           <div className="mt-3 flex flex-wrap gap-3">
             {checklists.map((item) => (
-              <Link key={item.slug} className={buttonClasses("secondary", "border-dashed")} href={`/checklist/${item.slug}`}>
+              <Link key={item.slug} className={buttonClasses("secondary", "border-dashed")} href={`/checklists/${item.slug}`}>
                 {item.title}
               </Link>
             ))}
