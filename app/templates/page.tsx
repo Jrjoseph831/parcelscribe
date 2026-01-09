@@ -18,7 +18,7 @@ export default function TemplatesIndexPage() {
           <div className="space-y-2">
             <Link href="/" className="text-xs font-semibold uppercase tracking-wide text-blue-600 underline-offset-2 hover:underline">Templates</Link>
             <h1 className="text-3xl font-semibold text-gray-900">Claim letter templates and checklists</h1>
-            <p className="text-lg text-gray-700">Copy-ready letters in one place—no redirects, no missing pages.</p>
+            <p className="text-lg text-gray-700">Copy-ready letters in one place for UPS and FedEx claims.</p>
           </div>
           <div className="flex flex-wrap gap-3">
             <Link className={buttonClasses("primary")} href="/builder">Start a claim packet</Link>
