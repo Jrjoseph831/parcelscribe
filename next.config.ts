@@ -2,6 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   outputFileTracingIncludes: {
+    "lib/content/mdxLoader.ts": ["./content/**/*"],
     "app/guides/page.tsx": ["./content/guides/**/*"],
     "app/guides/[slug]/page.tsx": ["./content/guides/**/*"],
     "app/templates/page.tsx": ["./content/templates/**/*"],
