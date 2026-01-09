@@ -34,7 +34,7 @@ export default function TemplatesIndexPage() {
               className="flex h-full flex-col gap-2 rounded-xl border border-gray-200 bg-white px-4 py-4 shadow-sm hover:border-blue-200"
             >
               <p className="text-sm font-semibold text-gray-900">{template.title}</p>
-              <p className="text-sm text-gray-700">{template.description}</p>
+              <p className="text-sm text-gray-700">{template.metaDescription}</p>
               <p className="text-xs font-medium text-blue-700">Use template</p>
             </Link>
           ))}
