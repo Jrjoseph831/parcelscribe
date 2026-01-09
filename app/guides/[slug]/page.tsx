@@ -1,16 +1,29 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { guides, getGuide } from "@/content/guides";
 import { templates } from "@/content/templates";
 import { buttonClasses } from "@/components/ui/Button";
 
+const guideAliases: Record<string, string> = {
+  "how-to-file-ups-damage-claim": "ups-damage-claim",
+  "how-to-file-fedex-damage-claim": "fedex-damage-claim",
+  "how-to-file-ups-lost-package-claim": "ups-lost-package-claim",
+  "how-to-file-fedex-lost-package-claim": "fedex-lost-package-claim",
+};
+
+function resolveGuideSlug(slug: string) {
+  return guideAliases[slug] ?? slug;
+}
+
 export async function generateStaticParams() {
-  return guides.map((guide) => ({ slug: guide.slug }));
+  const aliasSlugs = Object.keys(guideAliases);
+  return [...guides.map((guide) => guide.slug), ...aliasSlugs].map((slug) => ({ slug }));
 }
 
 export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
-  const guide = getGuide(params.slug);
+  const canonicalSlug = resolveGuideSlug(params.slug);
+  const guide = getGuide(canonicalSlug);
   if (!guide) return {};
   return {
     title: guide.metaTitle,
@@ -20,10 +33,15 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
 }
 
 export default function GuidePage({ params }: { params: { slug: string } }) {
-  const guide = getGuide(params.slug);
+  const canonicalSlug = resolveGuideSlug(params.slug);
+  const guide = getGuide(canonicalSlug);
 
   if (!guide) {
     notFound();
+  }
+
+  if (params.slug !== canonicalSlug) {
+    redirect(`/guides/${canonicalSlug}`);
   }
 
   const relatedGuides = guide.relatedGuides ?? [];
