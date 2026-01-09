@@ -37,7 +37,9 @@ export default function GuidePage({ params }: { params: { slug: string } }) {
         </nav>
 
         <header className="space-y-3">
-          <p className="text-xs font-semibold uppercase tracking-wide text-blue-600">Guide</p>
+          <Link href="/" className="text-xs font-semibold uppercase tracking-wide text-blue-600 underline-offset-2 hover:underline">
+            Guides
+          </Link>
           <h1 className="text-3xl font-semibold text-gray-900">{guide.title}</h1>
           <p className="text-lg text-gray-700">{guide.intro}</p>
           <div className="flex flex-wrap gap-3">

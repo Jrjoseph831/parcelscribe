@@ -16,7 +16,9 @@ export default function GuidesIndexPage() {
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-10">
         <header className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <div className="space-y-2">
-            <p className="text-xs font-semibold uppercase tracking-wide text-blue-600">Guides</p>
+            <Link href="/" className="text-xs font-semibold uppercase tracking-wide text-blue-600 underline-offset-2 hover:underline">
+              Guides
+            </Link>
             <h1 className="text-3xl font-semibold text-gray-900">UPS/FedEx claim guides</h1>
             <p className="text-lg text-gray-700">Reddit-style answers for damaged, lost, or missing-contents claims.</p>
           </div>
