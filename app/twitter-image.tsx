@@ -32,7 +32,7 @@ export default function TwitterImage() {
         <div style={{ fontSize: 22, marginTop: 18, maxWidth: "72%", color: "#dbeafe" }}>
           Cover letter, timeline, and evidence checklist in one PDF for damage or lost package claims.
         </div>
-        <div style={{ marginTop: 30, display: "inline-flex", alignItems: "center", gap: 12, fontSize: 18 }}>
+        <div style={{ marginTop: 30, display: "flex", alignItems: "center", gap: 12, fontSize: 18 }}>
           <span style={{ background: "#e0f2fe", color: "#0ea5e9", padding: "10px 16px", borderRadius: 999 }}>Photos</span>
           <span style={{ background: "#e0f2fe", color: "#0ea5e9", padding: "10px 16px", borderRadius: 999 }}>Proof of value</span>
           <span style={{ background: "#e0f2fe", color: "#0ea5e9", padding: "10px 16px", borderRadius: 999 }}>Timeline</span>

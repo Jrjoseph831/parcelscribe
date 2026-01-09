@@ -32,7 +32,7 @@ export default function OpenGraphImage() {
         <div style={{ fontSize: 24, marginTop: 20, maxWidth: "70%", color: "#c7d2fe" }}>
           Generate a carrier-ready PDF with cover letter, timeline, and evidence checklist for damage or lost packages.
         </div>
-        <div style={{ marginTop: 32, display: "inline-flex", alignItems: "center", gap: 12, fontSize: 20 }}>
+        <div style={{ marginTop: 32, display: "flex", alignItems: "center", gap: 12, fontSize: 20 }}>
           <span style={{ background: "#e0f2fe", color: "#0ea5e9", padding: "10px 16px", borderRadius: 999 }}>UPS & FedEx</span>
           <span style={{ background: "#dbeafe", color: "#1d4ed8", padding: "10px 16px", borderRadius: 999 }}>Damage • Loss</span>
         </div>
