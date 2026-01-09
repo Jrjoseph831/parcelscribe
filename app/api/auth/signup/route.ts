@@ -25,7 +25,13 @@ export async function POST(request: NextRequest) {
       getAll() {
         return request.cookies.getAll();
       },
-      async setAll(cookiesToSet) {
+      async setAll(
+        cookiesToSet: Array<{
+          name: string;
+          value: string;
+          options?: Record<string, any>;
+        }>,
+      ) {
         await Promise.all(
           cookiesToSet.map(({ name, value, options }) => response.cookies.set(name, value, options)),
         );
