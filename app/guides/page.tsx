@@ -17,7 +17,7 @@ export default async function GuidesIndexPage() {
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-10">
         <header className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <div className="space-y-2">
-            <Link href="/guides" className="text-xs font-semibold uppercase tracking-wide text-blue-600 underline-offset-2 hover:underline">
+            <Link href="/" className="text-xs font-semibold uppercase tracking-wide text-blue-600 underline-offset-2 hover:underline">
               Guides
             </Link>
             <h1 className="text-3xl font-semibold text-gray-900">UPS/FedEx claim guides</h1>

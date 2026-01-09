@@ -2,23 +2,26 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { buttonClasses } from "@/components/ui/Button";
-import { getTemplate, listChecklists } from "@/lib/content/content";
+import { listChecklists } from "@/lib/content/content";
+import { loadMdxDocument } from "@/lib/content/mdxLoader";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
+export const runtime = "nodejs";
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const template = await getTemplate(params.slug);
+  const template = await loadMdxDocument({ type: "templates", slug: params.slug });
   if (!template) return {};
+  const data = template.data as { title?: string; metaTitle?: string; metaDescription?: string };
   return {
-    title: template.metaTitle ?? template.title,
-    description: template.metaDescription,
-    alternates: { canonical: `https://parcelscribe.com/templates/${template.slug}` },
+    title: data.metaTitle ?? data.title ?? params.slug,
+    description: data.metaDescription,
+    alternates: { canonical: `https://parcelscribe.com/templates/${params.slug}` },
   };
 }
 
 export default async function TemplatePage({ params }: { params: { slug: string } }) {
-  const template = await getTemplate(params.slug);
+  const template = await loadMdxDocument({ type: "templates", slug: params.slug });
   const checklists = await listChecklists();
 
   if (!template) {
@@ -30,13 +33,13 @@ export default async function TemplatePage({ params }: { params: { slug: string 
     <main className="bg-white px-4 py-12 md:px-10">
       <div className="mx-auto flex w-full max-w-4xl flex-col gap-8">
         <nav className="text-xs text-gray-600">
-          <Link href="/templates" className="text-blue-700">Templates</Link> <span className="text-gray-400">/</span> <span className="text-gray-800">{template.title}</span>
+          <Link href="/templates" className="text-blue-700">Templates</Link> <span className="text-gray-400">/</span> <span className="text-gray-800">{(template.data as any).title ?? params.slug}</span>
         </nav>
 
         <header className="space-y-3">
           <p className="text-xs font-semibold uppercase tracking-wide text-blue-600">Template</p>
-          <h1 className="text-3xl font-semibold text-gray-900">{template.title}</h1>
-          <p className="text-lg text-gray-700">{template.metaDescription}</p>
+          <h1 className="text-3xl font-semibold text-gray-900">{(template.data as any).title ?? params.slug}</h1>
+          <p className="text-lg text-gray-700">{(template.data as any).metaDescription ?? ""}</p>
           <div className="flex flex-wrap gap-3">
             <Link className={buttonClasses("primary")} href="/builder">Generate your packet PDF</Link>
             <Link className={buttonClasses("secondary")} href="/pricing">Pricing</Link>

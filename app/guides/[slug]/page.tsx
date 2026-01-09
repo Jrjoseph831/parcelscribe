@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { buttonClasses } from "@/components/ui/Button";
-import { getGuide } from "@/lib/content/content";
+import { loadMdxDocument } from "@/lib/content/mdxLoader";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
+export const runtime = "nodejs";
 
 const guideAliases: Record<string, string> = {
   "how-to-file-ups-damage-claim": "ups-damage-claim",
@@ -20,18 +21,19 @@ function resolveGuideSlug(slug: string) {
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const canonicalSlug = resolveGuideSlug(params.slug);
-  const guide = await getGuide(canonicalSlug);
+  const guide = await loadMdxDocument({ type: "guides", slug: canonicalSlug });
   if (!guide) return {};
+  const data = guide.data as { title?: string; metaTitle?: string; metaDescription?: string };
   return {
-    title: guide.metaTitle ?? guide.title,
-    description: guide.metaDescription,
-    alternates: { canonical: `https://parcelscribe.com/guides/${guide.slug}` },
+    title: data.metaTitle ?? data.title ?? canonicalSlug,
+    description: data.metaDescription,
+    alternates: { canonical: `https://parcelscribe.com/guides/${canonicalSlug}` },
   };
 }
 
 export default async function GuidePage({ params }: { params: { slug: string } }) {
   const canonicalSlug = resolveGuideSlug(params.slug);
-  const guide = await getGuide(canonicalSlug);
+  const guide = await loadMdxDocument({ type: "guides", slug: canonicalSlug });
 
   if (!guide) {
     console.error(`[guides] Missing guide for slug: ${canonicalSlug}`);
@@ -46,15 +48,15 @@ export default async function GuidePage({ params }: { params: { slug: string } }
     <main className="bg-white px-4 py-12 md:px-10">
       <div className="mx-auto flex w-full max-w-4xl flex-col gap-8">
         <nav className="text-xs text-gray-600">
-          <Link href="/guides" className="text-blue-700">Guides</Link> <span className="text-gray-400">/</span> <span className="text-gray-800">{guide.title}</span>
+          <Link href="/guides" className="text-blue-700">Guides</Link> <span className="text-gray-400">/</span> <span className="text-gray-800">{(guide.data as any).title ?? canonicalSlug}</span>
         </nav>
 
         <header className="space-y-3">
           <Link href="/guides" className="text-xs font-semibold uppercase tracking-wide text-blue-600 underline-offset-2 hover:underline">
             Guides
           </Link>
-          <h1 className="text-3xl font-semibold text-gray-900">{guide.title}</h1>
-          <p className="text-lg text-gray-700">{guide.metaDescription}</p>
+          <h1 className="text-3xl font-semibold text-gray-900">{(guide.data as any).title ?? canonicalSlug}</h1>
+          <p className="text-lg text-gray-700">{(guide.data as any).metaDescription ?? ""}</p>
           <div className="flex flex-wrap gap-3">
             <Link className={buttonClasses("primary")} href="/builder">Generate your packet PDF</Link>
             <Link className={buttonClasses("secondary")} href="/pricing">Pricing</Link>
