@@ -19,7 +19,7 @@ export default function GuidesIndexPage() {
               Guides
             </Link>
             <h1 className="text-3xl font-semibold text-gray-900">UPS/FedEx claim guides</h1>
-            <p className="text-lg text-gray-700">Fast answers for damaged, lost, or missing-contents claims—no 404s, everything on one page.</p>
+            <p className="text-lg text-gray-700">Fast answers for damaged, lost, or missing-contents claims.</p>
           </div>
           <div className="flex flex-wrap gap-3">
             <Link className={buttonClasses("primary")} href="/builder">Start a claim packet</Link>
