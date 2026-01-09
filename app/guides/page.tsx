@@ -34,7 +34,7 @@ export default function GuidesIndexPage() {
               className="flex h-full flex-col gap-2 rounded-xl border border-gray-200 bg-white px-4 py-4 shadow-sm hover:border-blue-200"
             >
               <p className="text-sm font-semibold text-gray-900">{guide.title}</p>
-              <p className="text-sm text-gray-700">{guide.description}</p>
+              <p className="text-sm text-gray-700">{guide.metaDescription}</p>
               <p className="text-xs font-medium text-blue-700">Read guide</p>
             </Link>
           ))}

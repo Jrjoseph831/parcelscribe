@@ -13,8 +13,8 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
   const guide = getGuide(params.slug);
   if (!guide) return {};
   return {
-    title: guide.title,
-    description: guide.description,
+    title: guide.metaTitle,
+    description: guide.metaDescription,
     alternates: { canonical: `https://parcelscribe.com/guides/${guide.slug}` },
   };
 }
@@ -26,17 +26,8 @@ export default function GuidePage({ params }: { params: { slug: string } }) {
     notFound();
   }
 
-  const faqJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: guide.faqs.map((faq) => ({
-      "@type": "Question",
-      name: faq.question,
-      acceptedAnswer: { "@type": "Answer", text: faq.answer },
-    })),
-  };
-
-  const relatedLinks = guide.related ?? [];
+  const relatedGuides = guide.relatedGuides ?? [];
+  const relatedTemplates = guide.relatedTemplates ?? [];
 
   return (
     <main className="bg-white px-4 py-12 md:px-10">
@@ -48,7 +39,7 @@ export default function GuidePage({ params }: { params: { slug: string } }) {
         <header className="space-y-3">
           <p className="text-xs font-semibold uppercase tracking-wide text-blue-600">Guide</p>
           <h1 className="text-3xl font-semibold text-gray-900">{guide.title}</h1>
-          <p className="text-lg text-gray-700">{guide.hero}</p>
+          <p className="text-lg text-gray-700">{guide.intro}</p>
           <div className="flex flex-wrap gap-3">
             <Link className={buttonClasses("primary")} href="/builder">Generate your packet PDF</Link>
             <Link className={buttonClasses("secondary")} href="/pricing">Pricing</Link>
@@ -56,31 +47,44 @@ export default function GuidePage({ params }: { params: { slug: string } }) {
         </header>
 
         <section className="grid gap-4 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-          {guide.sections.map((section) => (
-            <div key={section.heading} className="space-y-2">
-              <h2 className="text-lg font-semibold text-gray-900">{section.heading}</h2>
+          <div className="space-y-2">
+            <h2 className="text-lg font-semibold text-gray-900">Steps</h2>
+            <ol className="list-decimal space-y-1 pl-5 text-sm text-gray-800">
+              {guide.steps.map((step) => (
+                <li key={step}>{step}</li>
+              ))}
+            </ol>
+          </div>
+
+          <div className="space-y-2">
+            <h2 className="text-lg font-semibold text-gray-900">What you need</h2>
+            <ul className="list-disc space-y-1 pl-5 text-sm text-gray-800">
+              {guide.whatYouNeed.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="space-y-2">
+            <h2 className="text-lg font-semibold text-gray-900">Common mistakes</h2>
+            <ul className="list-disc space-y-1 pl-5 text-sm text-gray-800">
+              {guide.commonMistakes.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </div>
+
+          {guide.nextSteps?.length ? (
+            <div className="space-y-2">
+              <h2 className="text-lg font-semibold text-gray-900">Next steps</h2>
               <ul className="list-disc space-y-1 pl-5 text-sm text-gray-800">
-                {section.bullets.map((bullet) => (
-                  <li key={bullet}>{bullet}</li>
+                {guide.nextSteps.map((item) => (
+                  <li key={item}>{item}</li>
                 ))}
               </ul>
             </div>
-          ))}
+          ) : null}
         </section>
-
-        {guide.faqs.length ? (
-          <section className="grid gap-3 rounded-2xl border border-gray-200 bg-slate-50 p-6">
-            <h2 className="text-lg font-semibold text-gray-900">FAQ</h2>
-            <div className="grid gap-3">
-              {guide.faqs.map((faq) => (
-                <div key={faq.question} className="rounded-lg border border-gray-200 bg-white p-4">
-                  <p className="font-semibold text-gray-900">{faq.question}</p>
-                  <p className="mt-2 text-sm text-gray-700">{faq.answer}</p>
-                </div>
-              ))}
-            </div>
-          </section>
-        ) : null}
 
         <section className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-blue-100 bg-blue-50 p-6">
           <div>
@@ -90,42 +94,40 @@ export default function GuidePage({ params }: { params: { slug: string } }) {
           <Link className={buttonClasses("primary")} href="/builder">Start a claim packet</Link>
         </section>
 
-        {relatedLinks.length ? (
+        {relatedGuides.length || relatedTemplates.length ? (
           <section className="grid gap-3 rounded-2xl border border-gray-200 bg-white p-6">
             <h2 className="text-lg font-semibold text-gray-900">Related</h2>
             <div className="flex flex-wrap gap-3">
-              {relatedLinks.map((slug) => {
+              {relatedGuides.map((slug) => {
                 const relatedGuide = getGuide(slug);
+                if (!relatedGuide) return null;
+                return (
+                  <Link key={slug} className={buttonClasses("secondary", "border-dashed")} href={`/guides/${slug}`}>
+                    {relatedGuide.title}
+                  </Link>
+                );
+              })}
+
+              {relatedTemplates.map((slug) => {
                 const relatedTemplate = templates.find((tpl) => tpl.slug === slug);
-
-                if (relatedGuide) {
-                  return (
-                    <Link key={slug} className={buttonClasses("secondary", "border-dashed")} href={`/guides/${slug}`}>
-                      {relatedGuide.title}
-                    </Link>
-                  );
-                }
-
-                if (relatedTemplate) {
-                  return (
-                    <Link key={slug} className={buttonClasses("secondary", "border-dashed")} href={`/templates/${slug}`}>
-                      {relatedTemplate.title}
-                    </Link>
-                  );
-                }
-
-                return null;
+                if (!relatedTemplate) return null;
+                return (
+                  <Link key={slug} className={buttonClasses("secondary", "border-dashed")} href={`/templates/${slug}`}>
+                    {relatedTemplate.title}
+                  </Link>
+                );
               })}
             </div>
           </section>
         ) : null}
-      </div>
 
-      <script
-        type="application/ld+json"
-        suppressHydrationWarning
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-      />
+        {guide.disclaimer ? (
+          <section className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
+            <p className="font-semibold">Reminder</p>
+            <p className="mt-1">{guide.disclaimer}</p>
+          </section>
+        ) : null}
+      </div>
     </main>
   );
 }
