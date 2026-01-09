@@ -14,11 +14,12 @@ function resolveGuideSlug(slug: string) {
 
 export const runtime = "edge";
 
-export async function GET(_request: NextRequest, { params }: { params: { slug: string } }) {
-  const canonical = resolveGuideSlug(params.slug);
+export async function GET(_request: NextRequest, { params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const canonical = resolveGuideSlug(slug);
   const guide = guides.find((g) => g.slug === canonical);
   return NextResponse.json({
-    requested: params.slug,
+    requested: slug,
     canonical,
     found: Boolean(guide),
     guideTitle: guide?.title ?? null,

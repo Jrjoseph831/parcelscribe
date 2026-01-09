@@ -3,10 +3,11 @@ import { templates } from "@/content/templates";
 
 export const runtime = "edge";
 
-export async function GET(_request: NextRequest, { params }: { params: { slug: string } }) {
-  const template = templates.find((t) => t.slug === params.slug);
+export async function GET(_request: NextRequest, { params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const template = templates.find((t) => t.slug === slug);
   return NextResponse.json({
-    requested: params.slug,
+    requested: slug,
     found: Boolean(template),
     title: template?.title ?? null,
     metaTitle: template?.metaTitle ?? null,
