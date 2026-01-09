@@ -111,7 +111,7 @@ export default function Home() {
         <section className="grid gap-6 rounded-2xl border border-gray-200 bg-white p-6 md:p-8">
           <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-wide text-blue-600">Guides</p>
+              <Link href="/" className="text-xs font-semibold uppercase tracking-wide text-blue-600 underline-offset-2 hover:underline">Guides</Link>
               <h2 className="text-2xl font-semibold text-gray-900">UPS/FedEx claim guides</h2>
               <p className="text-base text-gray-700">Reddit-style answers to common UPS and FedEx claim questions.</p>
             </div>
@@ -120,10 +120,10 @@ export default function Home() {
             </Link>
           </div>
           <div className="grid gap-4 md:grid-cols-2">
-            <GuideLink href="/guides/how-to-file-ups-damage-claim" title="How to file a UPS damage claim" />
-            <GuideLink href="/guides/how-to-file-fedex-damage-claim" title="How to file a FedEx damage claim" />
-            <GuideLink href="/guides/ups-lost-package-claim" title="UPS lost package claim" />
-            <GuideLink href="/guides/fedex-lost-package-claim" title="FedEx lost package claim" />
+            <GuideLink href="/guides#ups-damage-claim" title="UPS damage claim" />
+            <GuideLink href="/guides#fedex-damage-claim" title="FedEx damage claim" />
+            <GuideLink href="/guides#ups-lost-package-claim" title="UPS lost package claim" />
+            <GuideLink href="/guides#fedex-lost-package-claim" title="FedEx lost package claim" />
           </div>
         </section>
 
