@@ -36,7 +36,12 @@ export async function GET(_: Request, context: { params: { packetId: string } | 
     return NextResponse.json({ error: packetError?.message ?? "Packet not found" }, { status });
   }
 
-  const paid = await isPacketPaid({ supabase, packetId, userId, userEmail });
+  if (!isAdmin && packet.user_id !== userId) {
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  }
+
+  const ownerId = packet.user_id ?? userId;
+  const paid = await isPacketPaid({ supabase, packetId, userId: ownerId, userEmail });
   if (!paid && !isAdmin) {
     return NextResponse.json({ error: "Packet is not paid" }, { status: 403 });
   }
@@ -56,7 +61,7 @@ export async function GET(_: Request, context: { params: { packetId: string } | 
 
   if (!storagePath) {
     try {
-      const result = await generateAndStorePacketPdf({ supabase, packetId, userId, isAdmin });
+      const result = await generateAndStorePacketPdf({ supabase, packetId, userId: ownerId, isAdmin });
       storagePath = result.storagePath;
     } catch (err) {
       const message = err instanceof Error ? err.message : "Unable to generate PDF";

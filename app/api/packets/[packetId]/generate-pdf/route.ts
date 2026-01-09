@@ -30,12 +30,15 @@ export async function POST(_: Request, context: { params: { packetId: string } |
     return NextResponse.json({ error: packetError?.message ?? "Packet not found" }, { status });
   }
 
-  const paid = await isPacketPaid({ supabase, packetId, userId, userEmail });
-  if (!paid) {
-    return NextResponse.json({ error: "Packet is not paid" }, { status: 403 });
+  const ownerId = (packet as PacketDraft).user_id ?? userId;
+  if (!isAdmin && ownerId !== userId) {
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
-  const ownerId = (packet as PacketDraft).user_id ?? userId;
+  const paid = await isPacketPaid({ supabase, packetId, userId: ownerId, userEmail });
+  if (!paid && !isAdmin) {
+    return NextResponse.json({ error: "Packet is not paid" }, { status: 403 });
+  }
 
   try {
     await generateAndStorePacketPdf({ supabase, packetId, userId: ownerId, isAdmin });

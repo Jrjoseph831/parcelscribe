@@ -38,7 +38,8 @@ export async function GET(_: Request, context: { params: { packetId: string } | 
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
-  const paid = await isPacketPaid({ supabase, packetId, userId, userEmail });
+  const ownerId = packet.user_id;
+  const paid = await isPacketPaid({ supabase, packetId, userId: ownerId, userEmail });
   if (!paid && !isAdmin) {
     return NextResponse.json({ error: "Packet is not paid" }, { status: 403 });
   }
@@ -47,7 +48,7 @@ export async function GET(_: Request, context: { params: { packetId: string } | 
     .from("packet_files")
     .select("storage_path")
     .eq("packet_id", packetId)
-    .eq("user_id", userId)
+    .eq("user_id", ownerId)
     .eq("kind", "packet_pdf")
     .maybeSingle();
 

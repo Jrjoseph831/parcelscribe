@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/Button";
 import type { PacketStatus } from "@/lib/packets/types";
 import { useState } from "react";
 
-export function PreviewActions({ packetId, status }: { packetId: string; status: PacketStatus }) {
+export function PreviewActions({ packetId, status, isAdmin = false }: { packetId: string; status: PacketStatus; isAdmin?: boolean }) {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<"pay" | "download" | null>(null);
 
@@ -47,9 +47,9 @@ export function PreviewActions({ packetId, status }: { packetId: string; status:
     <div className="space-y-3">
       {error ? <div className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">{error}</div> : null}
 
-      {status === "paid" ? (
+      {status === "paid" || isAdmin ? (
         <Button onClick={downloadPdf} disabled={loading === "download"}>
-          {loading === "download" ? "Preparing PDF..." : "Download PDF"}
+          {loading === "download" ? "Preparing PDF..." : isAdmin && status !== "paid" ? "Admin download" : "Download PDF"}
         </Button>
       ) : (
         <div className="rounded-lg border border-gray-200 bg-white px-4 py-3">

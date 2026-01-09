@@ -2,7 +2,7 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 import { requireUser } from "@/lib/auth/requireUser";
-import { isPacketPaid } from "@/lib/payments/status";
+import { isAdminEmail, isPacketPaid } from "@/lib/payments/status";
 import { stripe } from "@/lib/stripe/stripe";
 import { NextResponse } from "next/server";
 
@@ -29,6 +29,7 @@ export async function POST(request: Request) {
   const { supabase, userId } = await requireUser();
   const { data: userData } = await supabase.auth.getUser();
   const userEmail = userData?.user?.email ?? null;
+  const isAdmin = isAdminEmail(userEmail);
 
   const { data: packet, error: packetError } = await supabase
     .from("packets")
@@ -43,7 +44,7 @@ export async function POST(request: Request) {
   }
 
   const alreadyPaid = await isPacketPaid({ supabase, packetId, userId, userEmail });
-  if (alreadyPaid) {
+  if (alreadyPaid && !isAdmin) {
     return NextResponse.json({ error: "Packet already paid" }, { status: 400 });
   }
 

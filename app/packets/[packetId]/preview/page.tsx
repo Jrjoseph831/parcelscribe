@@ -7,6 +7,7 @@ import {
   type PacketDraft,
 } from "@/lib/packets/types";
 import { createSignedUrl } from "@/lib/storage/signedUrl";
+import { isAdminEmail } from "@/lib/payments/status";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PreviewActions } from "./PreviewActions";
@@ -30,6 +31,9 @@ export default async function PacketPreviewPage({ params }: ParamsInput) {
   const { packetId } = await Promise.resolve(params);
   const isValidUuid = typeof packetId === "string" && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(packetId);
   const { supabase } = await requireUser();
+  const { data: userData } = await supabase.auth.getUser();
+  const userEmail = userData?.user?.email ?? null;
+  const isAdmin = isAdminEmail(userEmail);
 
   if (!isValidUuid) {
     if (process.env.NODE_ENV !== "production") {
@@ -79,6 +83,14 @@ export default async function PacketPreviewPage({ params }: ParamsInput) {
 
   const packetData = packet as PacketDraft;
   const isPaid = packetData.status === "paid";
+  const timeZone = process.env.APP_TIMEZONE || "America/New_York";
+  let generatedAt = new Date().toLocaleString();
+
+  try {
+    generatedAt = new Intl.DateTimeFormat("en-US", { dateStyle: "medium", timeStyle: "short", timeZone }).format(new Date());
+  } catch (err) {
+    console.error("Failed to format generated time", err);
+  }
 
   const { data: files } = await supabase
     .from("packet_files")
@@ -129,10 +141,10 @@ export default async function PacketPreviewPage({ params }: ParamsInput) {
               PARCELSCRIBE
             </Link>
             <h1 className="text-2xl font-semibold">Claim Packet Preview</h1>
-            <p className="text-sm text-gray-600">Generated {new Date().toLocaleString()}</p>
+            <p className="text-sm text-gray-600">Generated {generatedAt}</p>
             <p className="text-sm text-gray-600">Tracking: {packet.tracking_number}</p>
           </div>
-          <PreviewActions packetId={packetId} status={packetData.status} />
+          <PreviewActions packetId={packetId} status={packetData.status} isAdmin={isAdmin} />
         </header>
 
         <section className="grid gap-4 rounded-xl border border-gray-200 bg-gray-50 p-4 md:grid-cols-2">

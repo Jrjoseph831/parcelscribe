@@ -11,11 +11,7 @@ export async function isPacketPaid(params: {
   userId: string;
   userEmail?: string | null;
 }): Promise<boolean> {
-  const { supabase, packetId, userId, userEmail } = params;
-
-  if (isAdminEmail(userEmail)) {
-    return true;
-  }
+  const { supabase, packetId, userId } = params;
 
   const { data: packet, error: packetError } = await supabase
     .from("packets")

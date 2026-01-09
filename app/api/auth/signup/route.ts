@@ -4,10 +4,15 @@ import { NextRequest, NextResponse } from "next/server";
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const SUPABASE_KEY =
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
+const APP_URL = process.env.APP_URL;
 
 export async function POST(request: NextRequest) {
   if (!SUPABASE_URL || !SUPABASE_KEY) {
     return NextResponse.json({ error: "Missing Supabase environment variables" }, { status: 500 });
+  }
+
+  if (!APP_URL) {
+    return NextResponse.json({ error: "Missing APP_URL for email redirect" }, { status: 500 });
   }
 
   const { email, password } = (await request.json().catch(() => ({}))) as {
@@ -40,7 +45,13 @@ export async function POST(request: NextRequest) {
     },
   });
 
-  const { data, error } = await supabase.auth.signUp({ email, password });
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      emailRedirectTo: `${APP_URL}/auth/callback`,
+    },
+  });
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 400 });
