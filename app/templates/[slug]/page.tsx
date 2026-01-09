@@ -1,13 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { templates, getTemplate } from "@/content/templates";
+import { getTemplate } from "@/content/templates";
 import { checklists } from "@/content/checklists";
 import { buttonClasses } from "@/components/ui/Button";
 
-export async function generateStaticParams() {
-  return templates.map((template) => ({ slug: template.slug }));
-}
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
   const template = getTemplate(params.slug);

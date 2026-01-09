@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
-import { guides, getGuide } from "@/content/guides";
+import { getGuide } from "@/content/guides";
 import { templates } from "@/content/templates";
 import { buttonClasses } from "@/components/ui/Button";
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 const guideAliases: Record<string, string> = {
   "how-to-file-ups-damage-claim": "ups-damage-claim",
@@ -14,11 +17,6 @@ const guideAliases: Record<string, string> = {
 
 function resolveGuideSlug(slug: string) {
   return guideAliases[slug] ?? slug;
-}
-
-export async function generateStaticParams() {
-  const aliasSlugs = Object.keys(guideAliases);
-  return [...guides.map((guide) => guide.slug), ...aliasSlugs].map((slug) => ({ slug }));
 }
 
 export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
