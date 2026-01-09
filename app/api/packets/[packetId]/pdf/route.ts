@@ -2,6 +2,7 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 import { requireUser } from "@/lib/auth/requireUser";
+import { isPacketPaid, isAdminEmail } from "@/lib/payments/status";
 import { NextResponse } from "next/server";
 
 const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -18,12 +19,14 @@ export async function GET(_: Request, context: { params: { packetId: string } | 
   }
 
   const { supabase, userId } = await requireUser();
+  const { data: userData } = await supabase.auth.getUser();
+  const userEmail = userData?.user?.email ?? null;
+  const isAdmin = isAdminEmail(userEmail);
 
   const { data: packet, error: packetError } = await supabase
-    .from("packets")
-    .select("id,status")
+      .from("packets")
+      .select("id,status,user_id")
     .eq("id", packetId)
-    .eq("user_id", userId)
     .single();
 
   if (packetError || !packet) {
@@ -31,7 +34,12 @@ export async function GET(_: Request, context: { params: { packetId: string } | 
     return NextResponse.json({ error: packetError?.message ?? "Packet not found" }, { status });
   }
 
-  if (packet.status !== "paid") {
+  if (!isAdmin && packet.user_id !== userId) {
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  }
+
+  const paid = await isPacketPaid({ supabase, packetId, userId, userEmail });
+  if (!paid && !isAdmin) {
     return NextResponse.json({ error: "Packet is not paid" }, { status: 403 });
   }
 

@@ -12,7 +12,7 @@ export function PreviewActions({ packetId, status }: { packetId: string; status:
     setError(null);
     setLoading("pay");
     try {
-      const res = await fetch("/api/checkout", {
+      const res = await fetch("/api/stripe/create-checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ packetId }),
@@ -35,7 +35,6 @@ export function PreviewActions({ packetId, status }: { packetId: string; status:
     setError(null);
     setLoading("download");
     try {
-      await fetch(`/api/packets/${packetId}/generate-pdf`, { method: "POST" });
       window.location.href = `/api/packets/${packetId}/download`;
     } catch (e) {
       setError(e instanceof Error ? e.message : "Unable to download");

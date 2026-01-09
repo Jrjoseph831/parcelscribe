@@ -3,6 +3,8 @@ export const dynamic = "force-dynamic";
 
 import { Buffer } from "buffer";
 import { requireUser } from "@/lib/auth/requireUser";
+import { isPacketPaid, isAdminEmail } from "@/lib/payments/status";
+import { generateAndStorePacketPdf } from "@/lib/pdf/generateAndStore";
 import { NextResponse } from "next/server";
 
 const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -18,10 +20,10 @@ export async function GET(_: Request, context: { params: { packetId: string } | 
     return NextResponse.json({ error: "Invalid packet id" }, { status: 400 });
   }
 
-  const { supabase } = await requireUser();
+  const { supabase, userId } = await requireUser();
   const { data: userData } = await supabase.auth.getUser();
-  const allowlist = process.env.ADMIN_EMAILS?.split(",").map((v) => v.trim().toLowerCase()).filter(Boolean) ?? [];
-  const isAdmin = userData?.user?.email ? allowlist.includes(userData.user.email.toLowerCase()) : false;
+  const userEmail = userData?.user?.email ?? null;
+  const isAdmin = isAdminEmail(userEmail);
 
   const { data: packet, error: packetError } = await supabase
     .from("packets")
@@ -34,7 +36,8 @@ export async function GET(_: Request, context: { params: { packetId: string } | 
     return NextResponse.json({ error: packetError?.message ?? "Packet not found" }, { status });
   }
 
-  if (packet.status !== "paid" && !isAdmin) {
+  const paid = await isPacketPaid({ supabase, packetId, userId, userEmail });
+  if (!paid && !isAdmin) {
     return NextResponse.json({ error: "Packet is not paid" }, { status: 403 });
   }
 
@@ -49,11 +52,19 @@ export async function GET(_: Request, context: { params: { packetId: string } | 
     return NextResponse.json({ error: fileError.message }, { status: 500 });
   }
 
-  if (!pdfFile?.storage_path) {
-    return NextResponse.json({ error: "PDF not found" }, { status: 404 });
+  let storagePath = pdfFile?.storage_path ?? null;
+
+  if (!storagePath) {
+    try {
+      const result = await generateAndStorePacketPdf({ supabase, packetId, userId, isAdmin });
+      storagePath = result.storagePath;
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Unable to generate PDF";
+      return NextResponse.json({ error: message }, { status: 500 });
+    }
   }
 
-  const { data: download, error: downloadError } = await supabase.storage.from(BUCKET_PACKETS).download(pdfFile.storage_path);
+  const { data: download, error: downloadError } = await supabase.storage.from(BUCKET_PACKETS).download(storagePath);
 
   if (downloadError || !download) {
     return NextResponse.json({ error: downloadError?.message ?? "Unable to fetch PDF" }, { status: 500 });

@@ -5,14 +5,14 @@ import type { ReactNode } from "react";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-white px-6 py-16">
-      <div className="mx-auto flex max-w-5xl flex-col gap-12">
-        <section className="grid gap-10 md:grid-cols-[1.5fr_1fr] md:items-center">
+    <main className="min-h-screen bg-white px-4 py-10 md:px-8 md:py-12">
+      <div className="mx-auto flex w-full max-w-6xl flex-col gap-10">
+        <section className="grid gap-10 md:grid-cols-[1.4fr_1fr] md:items-center">
           <div className="space-y-6">
             <p className="text-xs font-semibold uppercase tracking-wide text-blue-600">PARCELSCRIBE</p>
             <div className="space-y-3">
-              <h1 className="text-4xl font-semibold leading-tight text-gray-900">Build your UPS/FedEx claim packet</h1>
-              <p className="text-lg text-gray-700">
+              <h1 className="text-5xl font-semibold leading-tight text-gray-900">Build your UPS/FedEx claim packet</h1>
+              <p className="text-lg text-gray-700 md:text-xl">
                 Build a carrier-ready claim packet in minutes. We keep your cover letter, incident
                 timeline, and evidence checklist clean and organized.
               </p>
@@ -35,7 +35,7 @@ export default function Home() {
             </div>
           </div>
 
-          <Card className="p-6">
+          <Card className="p-7 md:p-8">
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <div>
