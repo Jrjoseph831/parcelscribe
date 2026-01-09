@@ -8,10 +8,15 @@ import {
 } from "@/lib/packets/types";
 import { createSignedUrl } from "@/lib/storage/signedUrl";
 import { isAdminEmail } from "@/lib/payments/status";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PreviewActions } from "./PreviewActions";
 import { EvidenceList, type EvidenceFile } from "./EvidenceList";
+
+export const metadata: Metadata = {
+  robots: { index: false, follow: false },
+};
 
 function formatDate(value?: string | null) {
   if (!value) return "-";

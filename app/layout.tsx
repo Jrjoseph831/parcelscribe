@@ -12,10 +12,36 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const siteUrl = "https://parcelscribe.com";
+
 export const metadata: Metadata = {
-  title: "PARCELSCRIBE | PARCELSCRIBE BUILDER for UPS & FedEx claims",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "Parcelscribe — UPS/FedEx Claim Packet Builder",
+    template: "%s | Parcelscribe",
+  },
   description:
-    "Build a carrier-ready UPS/FedEx claim packet in minutes—cover letter, timeline, and evidence checklist.",
+    "Generate a carrier-ready claim packet PDF for UPS or FedEx (damage, loss, missing contents) with photos, proof of value, and narrative in minutes.",
+  openGraph: {
+    title: "Parcelscribe — UPS/FedEx Claim Packet Builder",
+    description:
+      "Generate a carrier-ready claim packet PDF for UPS or FedEx (damage, loss, missing contents) with photos, proof of value, and narrative in minutes.",
+    url: siteUrl,
+    siteName: "Parcelscribe",
+    images: ["/opengraph-image"],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Parcelscribe — UPS/FedEx Claim Packet Builder",
+    description:
+      "Generate a carrier-ready claim packet PDF for UPS or FedEx (damage, loss, missing contents) with photos, proof of value, and narrative in minutes.",
+    images: ["/twitter-image"],
+    site: "@parcelscribe",
+  },
+  icons: {
+    icon: "/icon",
+  },
 };
 
 export default function RootLayout({
