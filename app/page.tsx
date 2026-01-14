@@ -4,8 +4,8 @@ import { buttonClasses } from "@/components/ui/Button";
 
 const faqs = [
   {
-    q: "Does this work for UPS and FedEx?",
-    a: "Yes. Parcelscribe builds a claim packet that matches what UPS and FedEx request for damage, loss, or missing contents claims.",
+    q: "Does this help with UPS and FedEx refunds?",
+    a: "Yes. Parcelscribe builds a claim packet that matches what UPS and FedEx request for refunds due to damage, loss, or missing contents.",
   },
   {
     q: "What is inside the packet?",
@@ -29,10 +29,23 @@ const organizationJsonLd = {
   logo: "https://parcelscribe.com/icon.png",
 };
 
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: item.a,
+    },
+  })),
+};
+
 export const metadata: Metadata = {
   title: "UPS/FedEx Claim Packet Builder",
   description:
-    "Create a UPS or FedEx claim packet (damage, loss, missing contents) with photos, receipts, and narrative in minutes.",
+    "Create a UPS or FedEx claim packet for refunds (damage, loss, missing contents) with photos, receipts, and narrative in minutes.",
   alternates: { canonical: "https://parcelscribe.com/" },
 };
 
@@ -47,7 +60,7 @@ export default function Home() {
               Build a carrier-ready claim packet for damaged or lost packages
             </h1>
             <p className="text-lg text-gray-700 md:text-xl">
-              Parcelscribe creates a PDF with your cover letter, timeline, photos, and proof of value so UPS or FedEx reviewers get exactly what they need.
+              Parcelscribe creates a PDF with your cover letter, timeline, photos, and proof of value so UPS or FedEx reviewers get exactly what they need for refund approval.
             </p>
             <div className="flex flex-wrap gap-3">
               <Link className={buttonClasses("primary")} href="/builder">
@@ -113,7 +126,7 @@ export default function Home() {
             <div>
               <Link href="/" className="text-xs font-semibold uppercase tracking-wide text-blue-600 underline-offset-2 hover:underline">Guides</Link>
               <h2 className="text-2xl font-semibold text-gray-900">UPS/FedEx claim guides</h2>
-              <p className="text-base text-gray-700">Reddit-style answers to common UPS and FedEx claim questions.</p>
+              <p className="text-base text-gray-700">Answers to common UPS and FedEx refund and claim questions.</p>
             </div>
             <Link className={buttonClasses("secondary")} href="/guides">
               View all guides
@@ -124,6 +137,8 @@ export default function Home() {
             <GuideLink href="/guides#fedex-damage-claim" title="FedEx damage claim" />
             <GuideLink href="/guides#ups-lost-package-claim" title="UPS lost package claim" />
             <GuideLink href="/guides#fedex-lost-package-claim" title="FedEx lost package claim" />
+            <GuideLink href="/ups-refund" title="UPS refund guide" />
+            <GuideLink href="/fedex-refund" title="FedEx refund guide" />
           </div>
         </section>
 
@@ -147,6 +162,11 @@ export default function Home() {
         type="application/ld+json"
         suppressHydrationWarning
         dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        suppressHydrationWarning
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
     </main>
   );

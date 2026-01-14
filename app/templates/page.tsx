@@ -6,7 +6,8 @@ import { templates } from "@/lib/content/templates";
 
 export const metadata: Metadata = {
   title: "Claim Letter Templates",
-  description: "UPS/FedEx claim letter templates and evidence checklists for damage or lost packages.",
+  description: "UPS/FedEx claim letter templates and refund checklists for damage or lost packages.",
+  alternates: { canonical: "https://parcelscribe.com/templates" },
 };
 
 export default function TemplatesIndexPage() {
@@ -17,13 +18,34 @@ export default function TemplatesIndexPage() {
           <div className="space-y-2">
             <Link href="/" className="text-xs font-semibold uppercase tracking-wide text-blue-600 underline-offset-2 hover:underline">Templates</Link>
             <h1 className="text-3xl font-semibold text-gray-900">Claim letter templates and checklists</h1>
-            <p className="text-lg text-gray-700">Copy-ready letters in one place for UPS and FedEx claims.</p>
+            <p className="text-lg text-gray-700">Copy-ready letters for UPS and FedEx claim refunds and reimbursement requests.</p>
           </div>
           <div className="flex flex-wrap gap-3">
             <Link className={buttonClasses("primary")} href="/builder">Start a claim packet</Link>
             <Link className={buttonClasses("secondary")} href="/guides">View guides</Link>
           </div>
         </header>
+
+        <section className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm sm:p-6">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+            <div className="space-y-2">
+              <p className="text-xs font-semibold uppercase tracking-wide text-blue-600">Refund help</p>
+              <h2 className="text-2xl font-semibold text-gray-900">Refund request guides</h2>
+              <p className="text-sm text-gray-700 sm:text-base">Use these carrier-specific refund guides to match your wording and evidence.</p>
+            </div>
+            <Link className={`${buttonClasses("secondary")} w-full sm:w-auto`} href="/builder">Build a packet</Link>
+          </div>
+          <div className="mt-4 grid gap-3 sm:grid-cols-2">
+            <Link className="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm font-semibold text-gray-900 shadow-sm hover:border-blue-200" href="/ups-refund">
+              <span>UPS refund guide</span>
+              <span className="text-xs font-medium text-blue-600">Read</span>
+            </Link>
+            <Link className="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm font-semibold text-gray-900 shadow-sm hover:border-blue-200" href="/fedex-refund">
+              <span>FedEx refund guide</span>
+              <span className="text-xs font-medium text-blue-600">Read</span>
+            </Link>
+          </div>
+        </section>
 
         <section className="grid gap-4 md:grid-cols-2">
           {templates.map((template) => (

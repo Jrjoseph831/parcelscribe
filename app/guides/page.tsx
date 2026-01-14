@@ -19,13 +19,42 @@ export default function GuidesIndexPage() {
               Guides
             </Link>
             <h1 className="text-3xl font-semibold text-gray-900 sm:text-4xl">UPS/FedEx claim guides</h1>
-            <p className="text-base text-gray-700 sm:text-lg">Fast answers for damaged, lost, or missing-contents claims.</p>
+            <p className="text-base text-gray-700 sm:text-lg">Fast answers for refunds, damaged, lost, or missing-contents claims.</p>
           </div>
           <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <Link className={`${buttonClasses("primary")} w-full sm:w-auto`} href="/builder">Start a claim packet</Link>
             <Link className={`${buttonClasses("secondary")} w-full sm:w-auto`} href="/templates">View templates</Link>
           </div>
         </header>
+
+        <section className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm sm:p-6">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+            <div className="space-y-2">
+              <p className="text-xs font-semibold uppercase tracking-wide text-blue-600">Refunds</p>
+              <h2 className="text-2xl font-semibold text-gray-900">Refund and reimbursement guides</h2>
+              <p className="text-sm text-gray-700 sm:text-base">Looking for a refund? These explain how carrier refunds work as claims and what to include.</p>
+            </div>
+            <Link className={`${buttonClasses("secondary")} w-full sm:w-auto`} href="/templates">Use templates</Link>
+          </div>
+          <div className="mt-4 grid gap-3 sm:grid-cols-2">
+            <Link className="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm font-semibold text-gray-900 shadow-sm hover:border-blue-200" href="/ups-refund">
+              <span>UPS refund guide</span>
+              <span className="text-xs font-medium text-blue-600">Read</span>
+            </Link>
+            <Link className="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm font-semibold text-gray-900 shadow-sm hover:border-blue-200" href="/fedex-refund">
+              <span>FedEx refund guide</span>
+              <span className="text-xs font-medium text-blue-600">Read</span>
+            </Link>
+            <Link className="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm font-semibold text-gray-900 shadow-sm hover:border-blue-200" href="/ups-claim">
+              <span>UPS claim and refund steps</span>
+              <span className="text-xs font-medium text-blue-600">Read</span>
+            </Link>
+            <Link className="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm font-semibold text-gray-900 shadow-sm hover:border-blue-200" href="/fedex-claim">
+              <span>FedEx claim and refund steps</span>
+              <span className="text-xs font-medium text-blue-600">Read</span>
+            </Link>
+          </div>
+        </section>
 
         <section className="grid gap-4 md:grid-cols-2">
           {guides.map((guide) => (
