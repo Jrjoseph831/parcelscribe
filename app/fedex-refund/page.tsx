@@ -38,13 +38,13 @@ const breadcrumbJsonLd = {
       "@type": "ListItem",
       position: 1,
       name: "Home",
-      item: "https://parcelscribe.com/",
+      item: "https://www.parcelscribe.com/",
     },
     {
       "@type": "ListItem",
       position: 2,
       name: "FedEx Refund Guide",
-      item: "https://parcelscribe.com/fedex-refund",
+      item: "https://www.parcelscribe.com/fedex-refund",
     },
   ],
 };
@@ -53,7 +53,7 @@ export const metadata: Metadata = {
   title: "FedEx Refund Guide",
   description:
     "FedEx refund guide for lost or damaged packages. Learn how refunds work as claims and what to include for reimbursement.",
-  alternates: { canonical: "https://parcelscribe.com/fedex-refund" },
+  alternates: { canonical: "https://www.parcelscribe.com/fedex-refund" },
 };
 
 export default function FedexRefundPage() {

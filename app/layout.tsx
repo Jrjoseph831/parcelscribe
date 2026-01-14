@@ -12,7 +12,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const siteUrl = "https://parcelscribe.com";
+const siteUrl = "https://www.parcelscribe.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

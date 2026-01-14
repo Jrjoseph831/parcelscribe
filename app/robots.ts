@@ -22,7 +22,7 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/builder", "/packets", "/api", "/login", "/auth", "/account"],
       },
     ],
-    sitemap: "https://parcelscribe.com/sitemap.xml",
-    host: "parcelscribe.com",
+    sitemap: "https://www.parcelscribe.com/sitemap.xml",
+    host: "www.parcelscribe.com",
   };
 }

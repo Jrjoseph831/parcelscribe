@@ -18,14 +18,14 @@ const productJsonLd = {
     price: price,
     priceCurrency: "USD",
     availability: "https://schema.org/InStock",
-    url: "https://parcelscribe.com/pricing",
+    url: "https://www.parcelscribe.com/pricing",
   },
 };
 
 export const metadata: Metadata = {
   title: "Pricing",
   description: "Parcelscribe costs $9.99 per claim packet PDF. Pay only when you download.",
-  alternates: { canonical: "https://parcelscribe.com/pricing" },
+  alternates: { canonical: "https://www.parcelscribe.com/pricing" },
 };
 
 export default function PricingPage() {

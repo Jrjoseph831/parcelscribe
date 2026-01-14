@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-const siteUrl = "https://parcelscribe.com";
+const siteUrl = "https://www.parcelscribe.com";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();

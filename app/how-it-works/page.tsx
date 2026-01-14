@@ -5,7 +5,7 @@ import { buttonClasses } from "@/components/ui/Button";
 export const metadata: Metadata = {
   title: "How Parcelscribe Works",
   description: "See how Parcelscribe builds UPS/FedEx claim packets: collect details, upload photos, generate a PDF, and submit to the carrier.",
-  alternates: { canonical: "https://parcelscribe.com/how-it-works" },
+  alternates: { canonical: "https://www.parcelscribe.com/how-it-works" },
 };
 
 const steps = [

@@ -7,7 +7,7 @@ import { templates } from "@/lib/content/templates";
 export const metadata: Metadata = {
   title: "Claim Letter Templates",
   description: "UPS/FedEx claim letter templates and refund checklists for damage or lost packages.",
-  alternates: { canonical: "https://parcelscribe.com/templates" },
+  alternates: { canonical: "https://www.parcelscribe.com/templates" },
 };
 
 export default function TemplatesIndexPage() {

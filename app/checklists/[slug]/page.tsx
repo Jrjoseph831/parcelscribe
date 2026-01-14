@@ -13,7 +13,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   return {
     title: checklist.metaTitle ?? checklist.title,
     description: checklist.metaDescription,
-    alternates: { canonical: `https://parcelscribe.com/checklists/${checklist.slug}` },
+    alternates: { canonical: `https://www.parcelscribe.com/checklists/${checklist.slug}` },
   };
 }
 

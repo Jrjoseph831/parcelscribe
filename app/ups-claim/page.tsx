@@ -42,13 +42,13 @@ const breadcrumbJsonLd = {
       "@type": "ListItem",
       position: 1,
       name: "Home",
-      item: "https://parcelscribe.com/",
+      item: "https://www.parcelscribe.com/",
     },
     {
       "@type": "ListItem",
       position: 2,
       name: "UPS Claim and Refund",
-      item: "https://parcelscribe.com/ups-claim",
+      item: "https://www.parcelscribe.com/ups-claim",
     },
   ],
 };
@@ -57,7 +57,7 @@ export const metadata: Metadata = {
   title: "UPS Claim and Refund Guide",
   description:
     "UPS claim and refund checklist for lost, damaged, or missing contents shipments. Evidence list, refund wording, and reimbursement steps.",
-  alternates: { canonical: "https://parcelscribe.com/ups-claim" },
+  alternates: { canonical: "https://www.parcelscribe.com/ups-claim" },
 };
 
 export default function UpsClaimPage() {

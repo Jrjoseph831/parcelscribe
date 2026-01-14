@@ -25,8 +25,8 @@ const organizationJsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
   name: "Parcelscribe",
-  url: "https://parcelscribe.com",
-  logo: "https://parcelscribe.com/icon.png",
+  url: "https://www.parcelscribe.com",
+  logo: "https://www.parcelscribe.com/icon.png",
 };
 
 const faqJsonLd = {
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
   title: "UPS/FedEx Claim Packet Builder",
   description:
     "Create a UPS or FedEx claim packet for refunds (damage, loss, missing contents) with photos, receipts, and narrative in minutes.",
-  alternates: { canonical: "https://parcelscribe.com/" },
+  alternates: { canonical: "https://www.parcelscribe.com/" },
 };
 
 export default function Home() {

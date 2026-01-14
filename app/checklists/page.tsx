@@ -6,7 +6,7 @@ import { listChecklists } from "@/lib/content/content";
 export const metadata: Metadata = {
   title: "Evidence Checklists",
   description: "Evidence checklists for UPS/FedEx damage or lost package claims.",
-  alternates: { canonical: "https://parcelscribe.com/checklists" },
+  alternates: { canonical: "https://www.parcelscribe.com/checklists" },
 };
 
 export default async function ChecklistsIndexPage() {

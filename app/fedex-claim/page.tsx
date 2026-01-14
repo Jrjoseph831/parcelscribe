@@ -42,13 +42,13 @@ const breadcrumbJsonLd = {
       "@type": "ListItem",
       position: 1,
       name: "Home",
-      item: "https://parcelscribe.com/",
+      item: "https://www.parcelscribe.com/",
     },
     {
       "@type": "ListItem",
       position: 2,
       name: "FedEx Claim and Refund",
-      item: "https://parcelscribe.com/fedex-claim",
+      item: "https://www.parcelscribe.com/fedex-claim",
     },
   ],
 };
@@ -57,7 +57,7 @@ export const metadata: Metadata = {
   title: "FedEx Claim and Refund Guide",
   description:
     "FedEx claim and refund checklist for lost, damaged, or missing contents shipments. Evidence list, refund wording, and reimbursement steps.",
-  alternates: { canonical: "https://parcelscribe.com/fedex-claim" },
+  alternates: { canonical: "https://www.parcelscribe.com/fedex-claim" },
 };
 
 export default function FedexClaimPage() {
