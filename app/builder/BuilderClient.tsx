@@ -156,8 +156,8 @@ export default function BuilderClient() {
         />
       }
     >
-      <div className="mb-4 flex items-center justify-between">
-        <div className="text-sm text-gray-600">Step {currentStep + 1} of {steps.length}</div>
+      <div className="mb-4 flex flex-col gap-2 text-sm text-gray-600 sm:flex-row sm:items-center sm:justify-between">
+        <div>Step {currentStep + 1} of {steps.length}</div>
         <SaveStatus state={saveState} />
       </div>
 
@@ -165,12 +165,12 @@ export default function BuilderClient() {
         <StepComponent draft={draft} errors={errors} onChange={handleChange} />
       </div>
 
-      <div className="mt-8 flex items-center justify-between">
-        <Button variant="secondary" onClick={handleBack} disabled={currentStep === 0}>
+      <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <Button className="w-full sm:w-auto" variant="secondary" onClick={handleBack} disabled={currentStep === 0}>
           Back
         </Button>
-        <div className="flex items-center gap-3">
-          <Button onClick={handleNext}>
+        <div className="flex w-full items-center justify-end gap-3 sm:w-auto">
+          <Button className="w-full sm:w-auto" onClick={handleNext}>
             {currentStep === steps.length - 1 ? "Finish" : "Next"}
           </Button>
         </div>

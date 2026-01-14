@@ -133,11 +133,17 @@ export default async function PacketPreviewPage({ params }: ParamsInput) {
     <main className="bg-white px-6 py-10 text-gray-900">
       <div className="relative mx-auto flex max-w-5xl flex-col gap-6" data-paid={isPaid ? "true" : "false"}>
         {!isPaid ? (
-          <div className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center opacity-15 preview-watermark">
-            <div className="rotate-12 border-2 border-red-400 px-10 py-8 text-3xl font-semibold uppercase text-red-500">
-              PREVIEW — UNLOCK TO DOWNLOAD
+          <>
+            <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 sm:hidden">
+              <p className="text-xs font-semibold uppercase tracking-wide text-red-600">Preview mode</p>
+              <p className="mt-1 text-sm font-medium text-red-700">Unlock to download the full packet.</p>
             </div>
-          </div>
+            <div className="pointer-events-none absolute inset-0 z-0 hidden items-center justify-center opacity-15 preview-watermark sm:flex">
+              <div className="rotate-12 border-2 border-red-400 px-10 py-8 text-3xl font-semibold uppercase text-red-500">
+                PREVIEW - UNLOCK TO DOWNLOAD
+              </div>
+            </div>
+          </>
         ) : null}
 
         <header className="flex items-start justify-between border-b border-gray-200 pb-4">
