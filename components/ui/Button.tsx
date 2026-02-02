@@ -1,6 +1,6 @@
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes } from "react";
 
-type ButtonVariant = "primary" | "secondary";
+type ButtonVariant = "primary" | "secondary" | "ghost";
 
 type ButtonOnlyProps = ({ href?: undefined } & ButtonHTMLAttributes<HTMLButtonElement>) & {
   variant?: ButtonVariant;
@@ -19,12 +19,15 @@ function isAnchorButton(props: ButtonProps): props is AnchorButtonProps {
 }
 
 const baseClasses =
-  "inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2";
+  "inline-flex items-center justify-center rounded-full px-6 py-2.5 text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 btn-press disabled:opacity-50 disabled:cursor-not-allowed";
 
 const variantClasses: Record<ButtonVariant, string> = {
-  primary: "bg-blue-600 text-white hover:bg-blue-700 focus-visible:outline-blue-600",
+  primary:
+    "bg-[#0071e3] text-white hover:bg-[#0077ed] active:bg-[#006edb] focus-visible:ring-[#0071e3] shadow-[0_1px_3px_rgba(0,0,0,0.12),0_1px_2px_rgba(0,0,0,0.08)] hover:shadow-[0_4px_12px_rgba(0,113,227,0.35)]",
   secondary:
-    "border border-gray-300 bg-white text-gray-900 hover:bg-gray-50 focus-visible:outline-blue-600",
+    "bg-white/80 backdrop-blur-sm text-[#1d1d1f] border border-[#d2d2d7] hover:bg-white hover:border-[#86868b] active:bg-[#f5f5f7] focus-visible:ring-[#0071e3] shadow-[0_1px_2px_rgba(0,0,0,0.04)]",
+  ghost:
+    "text-[#0071e3] hover:bg-[#0071e3]/5 active:bg-[#0071e3]/10 focus-visible:ring-[#0071e3]",
 };
 
 export function buttonClasses(variant: ButtonVariant = "primary", extra = "") {

@@ -51,111 +51,231 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-white px-4 py-12 md:px-10">
-      <div className="mx-auto flex w-full max-w-6xl flex-col gap-12">
-        <section className="grid gap-10 md:grid-cols-[1.5fr_1fr] md:items-center">
-          <div className="space-y-6">
-            <p className="text-xs font-semibold uppercase tracking-wide text-blue-600">UPS / FedEx claim packets</p>
-            <h1 className="text-4xl font-semibold leading-tight text-gray-900 md:text-5xl">
-              Build a carrier-ready claim packet for damaged or lost packages
-            </h1>
-            <p className="text-lg text-gray-700 md:text-xl">
-              Parcelscribe creates a PDF with your cover letter, timeline, photos, and proof of value so UPS or FedEx reviewers get exactly what they need for refund approval.
+    <main className="min-h-screen bg-gradient-mesh">
+      {/* Navigation */}
+      <nav className="sticky top-0 z-50 glass border-b border-white/10">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+          <Link href="/" className="text-[17px] font-semibold text-[#1d1d1f] tracking-tight">
+            Parcelscribe
+          </Link>
+          <div className="flex items-center gap-6">
+            <Link href="/guides" className="text-sm text-[#1d1d1f]/80 hover:text-[#1d1d1f] transition-colors">
+              Guides
+            </Link>
+            <Link href="/pricing" className="text-sm text-[#1d1d1f]/80 hover:text-[#1d1d1f] transition-colors">
+              Pricing
+            </Link>
+            <Link href="/login" className="text-sm text-[#0071e3] hover:text-[#0077ed] transition-colors font-medium">
+              Sign in
+            </Link>
+            <Link className={buttonClasses("primary", "text-[13px] px-4 py-2")} href="/builder">
+              Get started
+            </Link>
+          </div>
+        </div>
+      </nav>
+
+      <div className="mx-auto flex w-full max-w-6xl flex-col px-6">
+        {/* Hero Section */}
+        <section className="py-20 md:py-28">
+          <div className="mx-auto max-w-4xl text-center stagger-children">
+            <p className="inline-flex items-center gap-2 rounded-full bg-[#0071e3]/5 px-4 py-1.5 text-[13px] font-medium text-[#0071e3] mb-6">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#0071e3] animate-pulse-soft" />
+              UPS & FedEx claim packets
             </p>
-            <div className="flex flex-wrap gap-3">
-              <Link className={buttonClasses("primary")} href="/builder">
+            <h1 className="text-[44px] md:text-[56px] font-semibold leading-[1.08] tracking-[-0.02em] text-[#1d1d1f]">
+              Get your carrier refund.
+              <br />
+              <span className="text-gradient-blue">Without the hassle.</span>
+            </h1>
+            <p className="mt-6 text-[19px] md:text-[21px] text-[#6e6e73] leading-relaxed max-w-2xl mx-auto">
+              Parcelscribe creates a professional PDF packet with your cover letter, timeline, photos, and proof of value—exactly what UPS and FedEx need to approve your claim.
+            </p>
+            <div className="mt-10 flex flex-wrap justify-center gap-4">
+              <Link className={buttonClasses("primary", "text-[15px] px-8 py-3")} href="/builder">
                 Start a claim packet
               </Link>
-              <Link className={buttonClasses("secondary")} href="/pricing">
+              <Link className={buttonClasses("secondary", "text-[15px] px-8 py-3")} href="/pricing">
                 See pricing
               </Link>
-              <Link className={buttonClasses("secondary", "border-dashed")} href="/guides">
-                Read guides
-              </Link>
             </div>
-            <div className="grid gap-2 sm:grid-cols-2">
-              <FeatureRow label="Cover letter + incident timeline" />
-              <FeatureRow label="Damage, loss, or missing contents" />
-              <FeatureRow label="Photos, receipts, proof of value" />
-              <FeatureRow label="Export-ready PDF for carrier portals" />
-            </div>
-          </div>
-
-          <div className="space-y-4 rounded-2xl border border-gray-200 bg-slate-50 p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-semibold text-gray-900">Claim packet PDF</p>
-                <p className="text-xs text-gray-600">UPS / FedEx ready • Damage or loss</p>
-              </div>
-              <span className="rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold text-blue-700">Preview</span>
-            </div>
-            <div className="space-y-2 rounded-lg border border-dashed border-gray-300 bg-white p-4 text-sm text-gray-800">
-              <p className="font-semibold text-gray-900">Inside your PDF</p>
-              <ul className="list-disc space-y-1 pl-5">
-                <li>Carrier-specific cover letter with requested facts.</li>
-                <li>Timestamped incident timeline for damage or loss.</li>
-                <li>Evidence checklist: photos, receipts, tracking, proof of value.</li>
-                <li>Ready to upload to UPS or FedEx claims portal.</li>
-              </ul>
-            </div>
-            <p className="text-xs text-gray-600">You focus on proof; Parcelscribe keeps the structure tight.</p>
           </div>
         </section>
 
-        <section className="grid gap-8 rounded-2xl border border-gray-200 bg-white p-6 md:p-8">
-          <div className="space-y-2">
-            <p className="text-xs font-semibold uppercase tracking-wide text-blue-600">How it works</p>
-            <h2 className="text-2xl font-semibold text-gray-900">Collect, upload, generate, submit</h2>
-            <p className="text-base text-gray-700">Simple steps to get a carrier-ready PDF.</p>
+        {/* Preview Card */}
+        <section className="pb-20">
+          <div className="mx-auto max-w-3xl">
+            <div className="glass-card rounded-3xl p-8 hover-lift">
+              <div className="flex items-start justify-between mb-6">
+                <div>
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#667eea] to-[#764ba2]">
+                      <svg className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="text-[17px] font-semibold text-[#1d1d1f]">Claim Packet PDF</p>
+                      <p className="text-[13px] text-[#86868b]">Ready for UPS or FedEx submission</p>
+                    </div>
+                  </div>
+                </div>
+                <span className="rounded-full bg-[#0071e3]/10 px-3 py-1 text-[12px] font-medium text-[#0071e3]">
+                  Preview
+                </span>
+              </div>
+              <div className="space-y-3 rounded-2xl border border-[#e8e8ed] bg-[#fafafa] p-5">
+                <p className="text-[15px] font-medium text-[#1d1d1f]">What's inside your packet</p>
+                <div className="grid gap-2 text-[14px] text-[#6e6e73]">
+                  <div className="flex items-center gap-3">
+                    <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#30d158]/10 text-[#30d158] text-[11px]">1</span>
+                    <span>Carrier-specific cover letter with all required facts</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#30d158]/10 text-[#30d158] text-[11px]">2</span>
+                    <span>Timestamped incident timeline for damage or loss</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#30d158]/10 text-[#30d158] text-[11px]">3</span>
+                    <span>Evidence checklist: photos, receipts, tracking info</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#30d158]/10 text-[#30d158] text-[11px]">4</span>
+                    <span>Export-ready PDF for carrier claim portals</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="grid gap-6 md:grid-cols-4">
-            <StepCard title="Collect details" body="Tracking, ship date, item value, and what went wrong." />
-            <StepCard title="Upload photos" body="Box, label, packing, and damage (or proof of shipment for loss)." />
-            <StepCard title="Generate packet" body="Parcelscribe builds the cover letter, timeline, and evidence list." />
-            <StepCard title="Submit to carrier" body="Upload the PDF to UPS or FedEx and reply fast to follow-ups." />
+        </section>
+
+        {/* Features */}
+        <section className="py-20 border-t border-[#e8e8ed]">
+          <div className="text-center mb-16">
+            <p className="text-[13px] font-medium text-[#0071e3] uppercase tracking-wide mb-3">How it works</p>
+            <h2 className="text-[32px] md:text-[40px] font-semibold text-[#1d1d1f] tracking-tight">
+              Four simple steps to your claim
+            </h2>
+            <p className="mt-4 text-[17px] text-[#6e6e73] max-w-xl mx-auto">
+              Collect, upload, generate, submit. Get a carrier-ready PDF in minutes.
+            </p>
           </div>
-          <div>
-            <Link className={buttonClasses("primary")} href="/builder">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 stagger-children">
+            <StepCard
+              number="01"
+              title="Collect details"
+              body="Tracking number, ship date, item value, and what went wrong with your package."
+            />
+            <StepCard
+              number="02"
+              title="Upload evidence"
+              body="Box condition, shipping label, packing materials, and damage photos."
+            />
+            <StepCard
+              number="03"
+              title="Generate packet"
+              body="Parcelscribe creates your cover letter, timeline, and evidence list automatically."
+            />
+            <StepCard
+              number="04"
+              title="Submit claim"
+              body="Download the PDF and upload to the UPS or FedEx claims portal."
+            />
+          </div>
+          <div className="mt-12 text-center">
+            <Link className={buttonClasses("primary", "text-[15px] px-8 py-3")} href="/builder">
               Start your packet
             </Link>
           </div>
         </section>
 
-        <section className="grid gap-6 rounded-2xl border border-gray-200 bg-white p-6 md:p-8">
-          <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+        {/* Guides Section */}
+        <section className="py-20 border-t border-[#e8e8ed]">
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10">
             <div>
-              <Link href="/" className="text-xs font-semibold uppercase tracking-wide text-blue-600 underline-offset-2 hover:underline">Guides</Link>
-              <h2 className="text-2xl font-semibold text-gray-900">UPS/FedEx claim guides</h2>
-              <p className="text-base text-gray-700">Answers to common UPS and FedEx refund and claim questions.</p>
+              <p className="text-[13px] font-medium text-[#0071e3] uppercase tracking-wide mb-3">Resources</p>
+              <h2 className="text-[32px] font-semibold text-[#1d1d1f] tracking-tight">
+                Claim guides & templates
+              </h2>
+              <p className="mt-2 text-[17px] text-[#6e6e73]">
+                Everything you need to know about UPS and FedEx claims.
+              </p>
             </div>
             <Link className={buttonClasses("secondary")} href="/guides">
               View all guides
             </Link>
           </div>
-          <div className="grid gap-4 md:grid-cols-2">
-            <GuideLink href="/guides#ups-damage-claim" title="UPS damage claim" />
-            <GuideLink href="/guides#fedex-damage-claim" title="FedEx damage claim" />
-            <GuideLink href="/guides#ups-lost-package-claim" title="UPS lost package claim" />
-            <GuideLink href="/guides#fedex-lost-package-claim" title="FedEx lost package claim" />
-            <GuideLink href="/ups-refund" title="UPS refund guide" />
-            <GuideLink href="/fedex-refund" title="FedEx refund guide" />
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            <GuideLink href="/ups-refund" title="UPS refund guide" description="Complete walkthrough for UPS damage and loss claims" />
+            <GuideLink href="/fedex-refund" title="FedEx refund guide" description="Step-by-step FedEx claim submission process" />
+            <GuideLink href="/guides#ups-damage-claim" title="UPS damage claim" description="Document damage for maximum refund approval" />
+            <GuideLink href="/guides#fedex-damage-claim" title="FedEx damage claim" description="FedEx-specific damage documentation tips" />
+            <GuideLink href="/guides#ups-lost-package-claim" title="UPS lost package" description="How to file when your package never arrived" />
+            <GuideLink href="/guides#fedex-lost-package-claim" title="FedEx lost package" description="FedEx lost package claim requirements" />
           </div>
         </section>
 
-        <section className="grid gap-4 rounded-2xl border border-gray-200 bg-white p-6 md:p-8">
-          <div className="space-y-2">
-            <p className="text-xs font-semibold uppercase tracking-wide text-blue-600">FAQ</p>
-            <h2 className="text-2xl font-semibold text-gray-900">Claim packet FAQs</h2>
+        {/* FAQ Section */}
+        <section className="py-20 border-t border-[#e8e8ed]">
+          <div className="text-center mb-12">
+            <p className="text-[13px] font-medium text-[#0071e3] uppercase tracking-wide mb-3">FAQ</p>
+            <h2 className="text-[32px] font-semibold text-[#1d1d1f] tracking-tight">
+              Common questions
+            </h2>
           </div>
-          <div className="grid gap-4 md:grid-cols-2">
+          <div className="grid gap-4 md:grid-cols-2 max-w-4xl mx-auto">
             {faqs.map((item) => (
-              <div key={item.q} className="rounded-lg border border-gray-200 bg-slate-50 p-4">
-                <p className="font-semibold text-gray-900">{item.q}</p>
-                <p className="mt-2 text-sm text-gray-700">{item.a}</p>
+              <div key={item.q} className="glass-card rounded-2xl p-6 hover-lift">
+                <p className="text-[15px] font-semibold text-[#1d1d1f] mb-2">{item.q}</p>
+                <p className="text-[14px] text-[#6e6e73] leading-relaxed">{item.a}</p>
               </div>
             ))}
           </div>
         </section>
+
+        {/* CTA Section */}
+        <section className="py-20 border-t border-[#e8e8ed]">
+          <div className="mx-auto max-w-2xl text-center">
+            <h2 className="text-[32px] md:text-[40px] font-semibold text-[#1d1d1f] tracking-tight">
+              Ready to get your refund?
+            </h2>
+            <p className="mt-4 text-[17px] text-[#6e6e73]">
+              Start building your claim packet now. Only pay when you download.
+            </p>
+            <div className="mt-8 flex flex-wrap justify-center gap-4">
+              <Link className={buttonClasses("primary", "text-[15px] px-8 py-3")} href="/builder">
+                Start a claim packet
+              </Link>
+              <Link className={buttonClasses("ghost", "text-[15px] px-8 py-3")} href="/pricing">
+                View pricing
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* Footer */}
+        <footer className="py-12 border-t border-[#e8e8ed]">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 text-[13px] text-[#86868b]">
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
+              <span>Not affiliated with UPS or FedEx</span>
+              <span className="hidden md:inline">·</span>
+              <span>Data stays private until download</span>
+              <span className="hidden md:inline">·</span>
+              <span>$9.99 per packet</span>
+            </div>
+            <div className="flex items-center gap-6">
+              <Link href="mailto:hello@parcelscribe.com" className="hover:text-[#1d1d1f] transition-colors">
+                Contact
+              </Link>
+              <Link href="/privacy" className="hover:text-[#1d1d1f] transition-colors">
+                Privacy
+              </Link>
+              <Link href="/terms" className="hover:text-[#1d1d1f] transition-colors">
+                Terms
+              </Link>
+            </div>
+          </div>
+        </footer>
       </div>
 
       <script
@@ -172,29 +292,31 @@ export default function Home() {
   );
 }
 
-function FeatureRow({ label }: { label: string }) {
+function StepCard({ number, title, body }: { number: string; title: string; body: string }) {
   return (
-    <div className="flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-800 shadow-sm">
-      <span className="h-2 w-2 rounded-full bg-blue-600" aria-hidden />
-      <span>{label}</span>
+    <div className="glass-card rounded-2xl p-6 hover-lift group">
+      <span className="text-[13px] font-semibold text-[#0071e3] mb-4 block">{number}</span>
+      <p className="text-[17px] font-semibold text-[#1d1d1f] mb-2">{title}</p>
+      <p className="text-[14px] text-[#6e6e73] leading-relaxed">{body}</p>
     </div>
   );
 }
 
-function StepCard({ title, body }: { title: string; body: string }) {
+function GuideLink({ href, title, description }: { href: string; title: string; description: string }) {
   return (
-    <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
-      <p className="text-sm font-semibold text-gray-900">{title}</p>
-      <p className="mt-2 text-sm text-gray-700">{body}</p>
-    </div>
-  );
-}
-
-function GuideLink({ href, title }: { href: string; title: string }) {
-  return (
-    <Link className="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm font-semibold text-gray-900 shadow-sm hover:border-blue-200" href={href}>
-      <span>{title}</span>
-      <span className="text-xs font-medium text-blue-600">Read</span>
+    <Link
+      className="glass-card rounded-2xl p-5 hover-lift group flex flex-col gap-2"
+      href={href}
+    >
+      <div className="flex items-center justify-between">
+        <span className="text-[15px] font-semibold text-[#1d1d1f]">{title}</span>
+        <span className="text-[#0071e3] group-hover:translate-x-1 transition-transform">
+          <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+        </span>
+      </div>
+      <p className="text-[13px] text-[#6e6e73]">{description}</p>
     </Link>
   );
 }
