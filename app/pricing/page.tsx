@@ -51,7 +51,7 @@ export default function PricingPage() {
   return (
     <main className="min-h-screen bg-gradient-mesh">
       {/* Navigation */}
-      <nav className="sticky top-0 z-50 glass border-b border-white/10">
+      <nav className="sticky top-0 z-50 glass-nav">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
           <Link href="/" className="text-[17px] font-semibold text-[#1d1d1f] tracking-tight">
             Parcelscribe
@@ -62,9 +62,6 @@ export default function PricingPage() {
             </Link>
             <Link href="/pricing" className="text-sm text-[#1d1d1f] font-medium">
               Pricing
-            </Link>
-            <Link href="/login" className="text-sm text-[#0071e3] hover:text-[#0077ed] transition-colors font-medium">
-              Sign in
             </Link>
             <Link className={buttonClasses("primary", "text-[13px] px-4 py-2")} href="/builder">
               Get started

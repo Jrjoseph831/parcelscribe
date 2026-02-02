@@ -70,7 +70,7 @@ export default function LoginPage() {
   return (
     <main className="min-h-screen bg-gradient-mesh flex flex-col">
       {/* Navigation */}
-      <nav className="glass border-b border-white/10">
+      <nav className="glass-nav">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
           <Link href="/" className="text-[17px] font-semibold text-[#1d1d1f] tracking-tight">
             Parcelscribe
