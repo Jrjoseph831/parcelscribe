@@ -1,9 +1,10 @@
 "use client";
 
-import type { ReactNode } from "react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 import Link from "next/link";
 import { Card } from "@/components/ui/Card";
-import { buttonClasses } from "@/components/ui/Button";
+import { Button } from "@/components/ui/Button";
+import { createClient } from "@/lib/supabase/client";
 
 export function BuilderShell({
   title,
@@ -16,6 +17,20 @@ export function BuilderShell({
   sidebar: ReactNode;
   children: ReactNode;
 }) {
+  const supabase = useMemo(() => createClient(), []);
+  const [userEmail, setUserEmail] = useState<string | null>(null);
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data }) => {
+      setUserEmail(data.user?.email ?? null);
+    });
+  }, [supabase]);
+
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+    window.location.href = "/login";
+  };
+
   return (
     <main className="min-h-screen bg-gradient-mesh">
       {/* Navigation */}
@@ -24,16 +39,17 @@ export function BuilderShell({
           <Link href="/" className="text-[17px] font-semibold text-[#1d1d1f] tracking-tight">
             Parcelscribe
           </Link>
-          <div className="flex items-center gap-6">
-            <Link href="/guides" className="text-sm text-[#1d1d1f]/80 hover:text-[#1d1d1f] transition-colors">
-              Guides
-            </Link>
-            <Link href="/pricing" className="text-sm text-[#1d1d1f]/80 hover:text-[#1d1d1f] transition-colors">
-              Pricing
-            </Link>
-            <Link className={buttonClasses("primary", "text-[13px] px-4 py-2")} href="/builder">
-              New packet
-            </Link>
+          <div className="flex items-center gap-4">
+            {userEmail ? (
+              <div className="flex items-center gap-3">
+                <span className="text-[13px] text-[#6e6e73] hidden sm:inline max-w-[180px] truncate" title={userEmail}>
+                  {userEmail}
+                </span>
+                <Button variant="secondary" className="text-[13px] px-4 py-2" onClick={handleSignOut}>
+                  Sign out
+                </Button>
+              </div>
+            ) : null}
           </div>
         </div>
       </nav>
